@@ -16,7 +16,9 @@ Communication Expectations (How and often will we communicate? How do we keep li
 
 Abilities Expectations (Technical strengths and areas for desired improvement): Matt wants to work on commenting code when doing more complex operations. Jalena would like to get more comfortable with accessing and manipulating promises and returns.
 
-Workload Expectations (What features do we each want to work on?): 
+Workload Expectations (What features do we each want to work on?):
+7/2/19 - Work together to set up DB and food endpoints, then split endpoints between us.
+7/3/19 - re-DTR for next sprint
 
 Workflow Expectations (Git workflow/Tools/Code Review/Reviewing Pull Requests): Don't merge own PRs, code conversation takes place in github rather than slack. Concentrate on proper code reviews before merges.
 
@@ -29,6 +31,7 @@ Agenda to discuss project launch:
  - Configure TravisCI and make first PR/deployment
 
 Ideas:
+ - Use Knex for microservice part 2
 
 Tools:
 
