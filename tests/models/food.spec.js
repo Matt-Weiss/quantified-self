@@ -11,7 +11,7 @@ describe('api', () => {
     shell.exec('npx sequelize db:migrate')
   });
   afterEach(() => {
-    // shell.exec('npx sequelize db:migrate:undo:all')
+    shell.exec('npx sequelize db:migrate:undo:all')
   });
   describe('Food model', () => {
     test('Is created with attributes', () => {
