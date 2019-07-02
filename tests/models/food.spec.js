@@ -14,12 +14,3 @@ describe('Food model', () => {
     })
   })
 });
-
-/*
-Game.create({
-          title: req.body.title,
-          price: req.body.price,
-          releaseYear: req.body.releaseYear,
-          active: req.body.active
-    })
-*/
