@@ -16,6 +16,19 @@ const existingFoodById = (foodId) => {
   })
 }
 
+router.get("/", function (req, res, next) {
+  Food.findAll()
+  .then(foods => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).send(JSON.stringify(foods));
+
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(500).send({error})
+  });
+});
+
 router.get("/:id", function(req, res, next) {
   var itExists = existingFoodById(req.params.id)
   .then(foodExists => {
@@ -26,10 +39,6 @@ router.get("/:id", function(req, res, next) {
       res.setHeader("Content-Type", "application/json");
       res.status(200).send(JSON.stringify(foodExists));
     }
-  })
-  .catch(error => {
-    res.setHeader("Content-Type", "application/json");
-    res.status(500).send({error})
   });
 });
 
@@ -50,7 +59,7 @@ router.post("/", function (req, res, next) {
   .catch(error => {
     res.setHeader("Content-Type", "application/json");
     res.status(500).send({ error });
-  })
-})
+  });
+});
 
 module.exports = router;
