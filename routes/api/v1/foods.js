@@ -9,6 +9,18 @@ const existingFood = (foodName) => {
     })
 }
 
+router.get("/", function (req, res, next) {
+  Food.findAll()
+  .then(foods => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).send(JSON.stringify(foods));
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(500).send({error})
+  })
+})
+
 router.post("/", function (req, res, next) {
   var itExists = existingFood(req.body.food.name)
   .then(itemExists => {
