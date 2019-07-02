@@ -3,7 +3,7 @@ var router = express.Router();
 var Food = require('../../../models').Food;
 
 const existingFood = (foodName) => {
-  return Food.findOne({ where: {name: foodName }})
+  return Food.findOne({ where: {name: foodName.toLowerCase()}})
     .then(food => {
       if (food != null) { return true } else { return false }
     })
@@ -13,7 +13,7 @@ router.post("/", function (req, res, next) {
   var itExists = existingFood(req.body.food.name)
   .then(itemExists => {
     if (itemExists == false) {
-      Food.create({name: req.body.food.name, calories: req.body.food.calories})
+      Food.create({name: req.body.food.name.toLowerCase(), calories: req.body.food.calories})
         .then(food => {
           res.setHeader("Content-Type", "application/json");
           res.status(201).send(JSON.stringify(food));
