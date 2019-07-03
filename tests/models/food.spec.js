@@ -24,7 +24,7 @@ describe('api', () => {
     shell.exec('npx sequelize db:migrate:undo:all')
   });
   afterAll(() => {
-    setTimeout(() => process.exit(), 500)
+    sequelize.close();
   });
 
   describe('Food model', () => {
