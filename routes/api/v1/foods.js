@@ -62,4 +62,37 @@ router.post("/", function (req, res, next) {
   });
 });
 
+router.patch("/:id", function (req, res, next) {
+  var itExists = existingFoodById(req.params.id)
+  .then(food => {
+    if (food == false) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(404).send("Food not found");
+    } else {
+      Food.update({
+        name: req.body.food.name.toLowerCase(),
+        calories: req.body.food.calories
+      },
+        {
+          returning: true,
+          where: {id: food.id }
+        }
+      )
+      .then(([rowsUpdate, [updatedFood]]) => {
+        if (updatedFood.name == req.body.food.name.toLowerCase() && updatedFood.calories == req.body.food.calories) {
+          res.setHeader("Content-Type", "application/json");
+          res.status(200).send(JSON.stringify(updatedFood));
+        } else {
+          res.setHeader("Content-Type", "application/json");
+          res.status(400).send("Bad Request");
+        }
+      })
+      .catch(error => {
+        res.setHeader("Content-Type", "application/json");
+        res.status(500).send({ error });
+      });
+    }
+  })
+})
+
 module.exports = router;
