@@ -15,18 +15,20 @@ describe('Test the foods path', () => {
     shell.exec('npx sequelize db:migrate:undo:all')
   });
 
-  test('It should respond to the GET /foods method', async () => {
+  test('It should respond to the GET /foods method', async (done) => {
     const res = await request(app)
       .get("/api/v1/foods")
 
       expect(res.statusCode).toBe(200)
+      done();
 
   });
 
-  test('It should respond to the GET /food/:id method', async () => {
+  test('It should respond to the GET /food/:id method', async (done) => {
     const res = await request(app)
       .get("/api/v1/foods/1")
 
       expect(res.statusCode).toBe(200)
+      done();
   });
 });

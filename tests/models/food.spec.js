@@ -25,14 +25,14 @@ describe('api', () => {
   });
 
   describe('Food model', () => {
-    test('Is created with attributes',async () => {
+    test('Is created with attributes',async (done) => {
       const food = await Food.create({
           name: "Apple",
           calories: 120
       })
         expect(food.name).toBe("Apple")
         expect(food.calories).toBe(120)
-      
+      done();
     })
   });
 })
