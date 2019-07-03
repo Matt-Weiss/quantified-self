@@ -30,7 +30,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/:id", function(req, res, next) {
-  var itExists = existingFoodById(req.params.id)
+  existingFoodById(req.params.id)
   .then(foodExists => {
     if (foodExists == false) {
       res.setHeader("Content-Type", "application/json");
@@ -43,7 +43,7 @@ router.get("/:id", function(req, res, next) {
 });
 
 router.post("/", function (req, res, next) {
-  var itExists = existingFoodByName(req.body.food.name)
+  existingFoodByName(req.body.food.name)
   .then(itemExists => {
     if (itemExists == false) {
       Food.create({name: req.body.food.name.toLowerCase(), calories: req.body.food.calories})
@@ -61,6 +61,22 @@ router.post("/", function (req, res, next) {
     res.status(500).send({ error });
   });
 });
+
+
+router.delete("/:id", function (req, res, next) {
+  existingFoodById(req.params.id)
+  .then(foodExists => {
+    if (foodExists == false) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(404).send("Food not found");
+    } else {
+      Food.destroy({where: {id: foodExists.id}});
+      res.setHeader("Content-Type", "application/json");
+      res.status(204).send();
+      }
+  })
+})
+
 
 router.patch("/:id", function (req, res, next) {
   var itExists = existingFoodById(req.params.id)
