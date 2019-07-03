@@ -7,7 +7,6 @@ describe('Test the root path', () => {
     return request(app).get("/").then(response => {
       expect(response.statusCode).toBe(200)
       expect(response.text).toContain("Welcome to Express")
-      expect(response.text).toContain("Express")
     })
   });
 });
