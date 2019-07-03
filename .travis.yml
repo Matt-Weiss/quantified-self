@@ -3,6 +3,10 @@ node_js: node
 install: npm install
 script:
 - npm test
+services:
+  - postgresql
+before_script:
+  - psql -c 'CREATE DATABASE travis_test;' -U postgres
 deploy:
   provider: heroku
   api_key:
