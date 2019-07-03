@@ -9,6 +9,8 @@ var foodsRouter = require('./routes/api/v1/foods');
 
 var app = express();
 
+app.on('close', () => sequelize.close())
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

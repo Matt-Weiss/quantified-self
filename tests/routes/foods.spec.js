@@ -15,7 +15,7 @@ describe('Test the foods path', () => {
     shell.exec('npx sequelize db:migrate:undo:all')
   });
   afterAll(() => {
-    sequelize.close();
+    app.close();
   });
 
   test('It should respond to the GET /foods method', async (done) => {
