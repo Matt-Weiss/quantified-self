@@ -3,18 +3,27 @@ var request = require("supertest");
 var app = require('../../app');
 
 
-describe('Test the root path', () => {
-  test('It should respond to the GET method', () => {
-    return request(app).get("/").then(response => {
+describe('Test the foods path', () => {
+  beforeAll(() => {
+    shell.exec('npx sequelize db:create')
+  });
+  beforeEach(() => {
+    shell.exec('npx sequelize db:migrate')
+    shell.exec('npx sequelize db:seed:all')
+  });
+  afterEach(() => {
+    shell.exec('npx sequelize db:migrate:undo:all')
+  });
+
+  test('It should respond to the GET /foods method', () => {
+    return request(app).get("/api/v1/foods").then(response => {
       expect(response.statusCode).toBe(200)
-      expect(response.text).toContain("Welcome to Express")
+    })
+  });
+
+  test('It should respond to the GET /food/:id method', () => {
+    return request(app).get("/api/v1/foods/1").then(response => {
+      expect(response.statusCode).toBe(200)
     })
   });
 });
-// describe('Test the foods path', () => {
-//   test('It should respond to the GET method', () => {
-//     return request(app).get("/api/v1/foods").then(response => {
-//       expect(response.statusCode).toBe(200)
-//     })
-//   });
-// });
