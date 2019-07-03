@@ -18,11 +18,12 @@ describe('api', () => {
   });
   beforeEach(() => {
     shell.exec('npx sequelize db:migrate')
+    shell.exec('npx sequelize db:seed:all')
   });
   afterEach(() => {
     shell.exec('npx sequelize db:migrate:undo:all')
   });
-  
+
   describe('Food model', () => {
     test('Is created with attributes', () => {
       Food.create({
