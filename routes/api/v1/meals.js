@@ -48,4 +48,19 @@ router.get("/", function (req, res, next) {
   });
 });
 
+router.delete("/:mealId/foods/:foodId", function (req,res,next) {
+  MealFoods.findOne({where: {meal_id: req.params.mealId,
+                             food_id: req.params.foodId}})
+  .then(mealFood => {
+    if (mealFood) {
+      mealFood.destroy()
+      res.setHeader("Content-Type", "application/json");
+      res.status(204).send()
+    } else {
+      res.setHeader("Content-Type", "application/json");
+      res.status(404).send("That food ID is not associated with that meal.")
+    }
+  })
+})
+
 module.exports = router;
