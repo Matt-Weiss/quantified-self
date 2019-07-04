@@ -31,7 +31,12 @@ var getAllFoods = (food) => {
      calories: food.calories}
 }
 
-
+const existingMealById = (mealId) => {
+  return Meal.findOne({ where: {id: mealId}})
+  .then(meal => {
+    if (meal != null) { return meal } else { return false }
+  })
+}
 
 router.get("/", function (req, res, next) {
   Meal.findAll()
@@ -47,5 +52,25 @@ router.get("/", function (req, res, next) {
     res.status(500).send({error})
   });
 });
+
+router.get("/:id", function (req, res, next) {
+  existingMealById(req.params.id)
+  .then(mealExists => {
+    if (mealExists == false) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(404).send("Meal not found");
+    } else {
+      getMealObjects(mealExists)
+      .then(meal => {
+        res.setHeader("Content-Type", "application/json");
+        res.status(200).send(JSON.stringify(meal));
+      })
+    }
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(500).send({error})
+  });
+})
 
 module.exports = router;
