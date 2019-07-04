@@ -53,7 +53,7 @@ router.get("/", function (req, res, next) {
   });
 });
 
-router.get("/:id", function (req, res, next) {
+router.get("/:id/foods", function (req, res, next) {
   existingMealById(req.params.id)
   .then(mealExists => {
     if (mealExists == false) {
