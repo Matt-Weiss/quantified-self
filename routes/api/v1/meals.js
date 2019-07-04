@@ -6,30 +6,41 @@ var MealFoods = require('../../../models').MealFoods;
 
 
 const parseMeals = (meals) => {
-  var allMeals = meals.map(getFoodArray)
-  return allMeals
+   return meals.map(getMealObjects)
 }
 
-var getFoodArray = (meal) => {
+//The async/await here for parseFoods turned out to be key to getting the array of foods
+var getMealObjects = async (meal) => {
   var getMealComponents = { id: meal.id,
-                name: meal.name,
-               foods: meal.getFoods()
-  }
+                          name: meal.name,
+                         foods: await parseFoods(meal.getFoods())
+                         }
   return getMealComponents
 }
 
-// var getRelatedFoods = (meal) => {
-//   var foods = meal.getFoods()
-//     var pry = require('pryjs'); eval(pry.it)
-//
-// }
+var parseFoods = (foods) => {
+  return foodsArray = foods.map(getAllFoods)
+  .then(foods => {
+    return foods
+  })
+}
+
+var getAllFoods = (food) => {
+  return { id: food.id,
+         name: food.name,
+     calories: food.calories}
+}
+
 
 
 router.get("/", function (req, res, next) {
   Meal.findAll()
   .then(meals => {
-    res.setHeader("Content-Type", "application/json");
-    res.status(200).send(JSON.stringify(parseMeals(meals)));
+    Promise.all(parseMeals(meals))
+    .then(meals => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).send(JSON.stringify(meals));
+    })
   })
   .catch(error => {
     res.setHeader("Content-Type", "application/json");
