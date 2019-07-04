@@ -15,24 +15,27 @@ var Food = require('../../models').Food;
 describe('api', () => {
   beforeAll(() => {
     shell.exec('npx sequelize db:create')
-  });
-  beforeEach(() => {
     shell.exec('npx sequelize db:migrate')
     shell.exec('npx sequelize db:seed:all')
   });
+  beforeEach(() => {
+  });
   afterEach(() => {
+  });
+  afterAll(() => {
     shell.exec('npx sequelize db:migrate:undo:all')
+    app.close();
   });
 
   describe('Food model', () => {
-    test('Is created with attributes', () => {
-      Food.create({
+    test('Is created with attributes',async (done) => {
+      const food = await Food.create({
           name: "Apple",
           calories: 120
-      }).then(food =>{
+      })
         expect(food.name).toBe("Apple")
         expect(food.calories).toBe(120)
-      })
+      done();
     })
   });
 })
