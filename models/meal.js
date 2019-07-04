@@ -1,13 +1,16 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Meal = sequelize.define('Meal', {
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
   }, {});
   Meal.associate = function(models) {
     Meal.belongsToMany(models.Food,{
       through: 'MealFoods',
       as: 'foods',
-      foreignKey: 'mealId'
+      foreignKey: 'meal_id'
     })
   };
   return Meal;
