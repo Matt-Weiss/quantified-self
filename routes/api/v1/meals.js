@@ -86,14 +86,14 @@ router.get("/:id/foods", function (req, res, next) {
   });
 })
 
-router.post("/:id/foods/:id", function (req, res, next) {
-  existingMealById(req.path.split("/")[1])
+router.post("/:mealId/foods/:foodId", function (req, res, next) {
+  existingMealById(req.params.mealId)
   .then(mealExists => {
     if (mealExists == false) {
       res.setHeader("Content-Type", "application/json");
       res.status(404).send("Meal not found");
     } else {
-      existingFoodById(req.params.id)
+      existingFoodById(req.params.foodId)
       .then(foodExists => {
         if (foodExists == false) {
           res.setHeader("Content-Type", "application/json");
