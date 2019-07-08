@@ -34,4 +34,30 @@ describe('Test the foods path', () => {
       expect(res.statusCode).toBe(200)
       done();
   });
+
+  test('It should respond to the DELETE /food/:id method', async (done) => {
+    const res = await request(app)
+      .delete("/api/v1/foods/1")
+
+      expect(res.statusCode).toBe(204)
+      done();
+  });
+
+  test('It should respond to the POST /food/ method', async (done) => {
+    const newFood = { "food": { "name": "Apple", "calories": 150} }
+    const res = await request(app)
+      .post("/api/v1/foods")
+      .send(newFood);
+      expect(res.statusCode).toBe(201)
+      done();
+  });
+
+  test('It should respond to the PATCH /food/:id method', async (done) => {
+    const updatedFood = { "food": { "name": "Mint", "calories": "14"} }
+    const res = await request(app)
+      .patch("/api/v1/foods/2")
+      .send(updatedFood);
+      expect(res.statusCode).toBe(200)
+      done();
+  });
 });
