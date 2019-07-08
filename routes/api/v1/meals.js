@@ -18,10 +18,11 @@ var getMealObjects = async (meal) => {
 }
 
 var parseFoods = (foods) => {
-  return foodsArray = foods.map(getAllFoods)
+  let foodsArray = foods.map(getAllFoods)
   .then(foods => {
     return foods
   })
+  return foodsArray
 }
 
 var getAllFoods = (food) => {
@@ -80,6 +81,7 @@ router.delete("/:mealId/foods/:foodId", function (req,res,next) {
       res.status(404).send("That food ID is not associated with that meal.")
     }
   })
+})
 
 router.get("/:id/foods", function (req, res, next) {
   existingMealById(req.params.id)
