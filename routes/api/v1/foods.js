@@ -34,7 +34,7 @@ router.get("/:id", function(req, res, next) {
   .then(foodExists => {
     if (foodExists == false) {
       res.setHeader("Content-Type", "application/json");
-      res.status(404).send("Food not found");
+      res.status(404).send(JSON.stringify({error: "Food not found"}));
     } else {
       res.setHeader("Content-Type", "application/json");
       res.status(200).send(JSON.stringify(foodExists));
@@ -53,7 +53,7 @@ router.post("/", function (req, res, next) {
         })
     } else {
       res.setHeader("Content-Type", "application/json");
-      res.status(400).send("This food already exists.");
+      res.status(400).send(JSON.stringify({error: "This food already exists."}));
     }
   })
   .catch(error => {
@@ -68,7 +68,7 @@ router.delete("/:id", function (req, res, next) {
   .then(foodExists => {
     if (foodExists == false) {
       res.setHeader("Content-Type", "application/json");
-      res.status(404).send("Food not found");
+      res.status(404).send(JSON.stringify({error: "Food not found"}));
     } else {
       Food.destroy({where: {id: foodExists.id}});
       res.setHeader("Content-Type", "application/json");
@@ -83,7 +83,7 @@ router.patch("/:id", function (req, res, next) {
   .then(food => {
     if (food == false) {
       res.setHeader("Content-Type", "application/json");
-      res.status(404).send("Food not found");
+      res.status(404).send(JSON.stringify({error: "Food not found"}));
     } else {
       Food.update({
         name: req.body.food.name.toLowerCase(),
@@ -100,7 +100,7 @@ router.patch("/:id", function (req, res, next) {
           res.status(200).send(JSON.stringify(updatedFood));
         } else {
           res.setHeader("Content-Type", "application/json");
-          res.status(400).send("Bad Request");
+          res.status(400).send(JSON.stringify({error: "Bad Request"}));
         }
       })
       .catch(error => {
