@@ -78,7 +78,7 @@ router.delete("/:mealId/foods/:foodId", function (req,res,next) {
       res.status(204).send()
     } else {
       res.setHeader("Content-Type", "application/json");
-      res.status(404).send("That food ID is not associated with that meal.")
+      res.status(404).send(JSON.stringify({error: "That food ID is not associated with that meal."}))
     }
   })
 })
@@ -88,7 +88,7 @@ router.get("/:id/foods", function (req, res, next) {
   .then(mealExists => {
     if (mealExists == false) {
       res.setHeader("Content-Type", "application/json");
-      res.status(404).send("Meal not found");
+      res.status(404).send(JSON.stringify({error: "Meal not found"}));
     } else {
       getMealObjects(mealExists)
       .then(meal => {
@@ -108,13 +108,13 @@ router.post("/:mealId/foods/:foodId", function (req, res, next) {
   .then(mealExists => {
     if (mealExists == false) {
       res.setHeader("Content-Type", "application/json");
-      res.status(404).send("Meal not found");
+      res.status(404).send(JSON.stringify({error: "Meal not found"}));
     } else {
       existingFoodById(req.params.foodId)
       .then(foodExists => {
         if (foodExists == false) {
           res.setHeader("Content-Type", "application/json");
-          res.status(404).send("Food not found");
+          res.status(404).send(JSON.stringify({error: "Food not found"}));
         } else {
           createMealFood(mealExists.id, foodExists.id)
           res.setHeader("Content-Type", "application/json");
