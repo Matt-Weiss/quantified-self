@@ -33,7 +33,6 @@ View it in production at https://lower-goose-93602.herokuapp.com
       npm install
       npm start
 
-##How to Use:
   ### Available Endpoints:
    #### GET /api/v1/foods
        Sample Response
